@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شیشه‌های عاشقانه</title>
+<meta name="description" content="شیشه‌هات رو پر کن، رنگت رو انتخاب کن، عکسش رو ذخیره کن.">
+<meta property="og:title" content="شیشه‌های عاشقانه">
+<meta property="og:description" content="شیشه‌هات رو پر کن، رنگت رو انتخاب کن، عکسش رو ذخیره کن.">
+<meta name="robots" content="noindex">
+<style>
+  @font-face{font-family:"Vazirmatn";src:url("fonts/Vazirmatn-Variable.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+  :root{--c:#e63946;--on-c:#fff;--ink:#1d1a17;--bg:#fbf6ef;--card:#fff;--muted:#6b625a;--line:#e9e0d5}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,system-ui,Tahoma,sans-serif;font-size:17px;line-height:1.7;padding-bottom:110px}
+  @media(min-width:960px){body{padding-bottom:40px}}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 16px}
+  header{margin-bottom:22px}
+  header h1{font-family:Vazirmatn,sans-serif;font-weight:900;font-size:clamp(38px,8vw,60px);margin:0;line-height:1.3}
+  header h1 span{color:var(--c);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+  header p{margin:10px 0 0;color:var(--muted);max-width:640px}
+  .layout{display:grid;gap:24px}
+  @media(min-width:960px){.layout{grid-template-columns:minmax(0,1fr) 430px}.side{position:sticky;top:20px;align-self:start}}
+  .panel{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px;margin-bottom:20px}
+  .step{font-family:Vazirmatn,sans-serif;font-weight:700;font-size:14px;color:var(--muted)}
+  h2{font-family:Vazirmatn,sans-serif;font-weight:700;font-size:25px;margin:2px 0 12px;line-height:1.4}
+  .hint{color:var(--muted);font-size:15px;margin:-4px 0 14px}
+  input[type=text]{font:inherit;font-size:20px;width:100%;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:#fff;color:var(--ink)}
+  input[type=text]:focus{border-color:var(--ink);outline:none}
+  button,input,textarea{font-family:Vazirmatn,Tahoma,sans-serif}
+  button{font:inherit;cursor:pointer;color:var(--ink)}
+  button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+  /* color picker */
+  .picker{display:grid;gap:18px}
+  @media(min-width:620px){.picker{grid-template-columns:1fr 170px;align-items:center}}
+  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;max-width:420px}
+  .sw{aspect-ratio:1;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);padding:0;min-width:40px}
+  .sw[aria-pressed=true]{box-shadow:0 0 0 3px var(--ink)}
+  .sliders{display:grid;gap:12px;margin-top:16px;max-width:420px}
+  .sl{display:grid;grid-template-columns:52px 1fr 44px;align-items:center;gap:10px;font-weight:700;font-size:16px}
+  .sl output{text-align:left;color:var(--muted);font-variant-numeric:tabular-nums}
+  input[type=range]{direction:ltr;-webkit-appearance:none;appearance:none;width:100%;height:26px;border-radius:13px;border:2px solid var(--ink);margin:0;background:#ccc}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--ink);box-shadow:0 2px 4px rgba(0,0,0,.25)}
+  input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+  .hexrow{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .hexrow input{direction:ltr;text-align:left;width:130px;font-size:18px;padding:10px 12px;font-family:ui-monospace,Menlo,monospace;text-transform:uppercase}
+  .ghost{background:#fff;border:2px solid var(--ink);border-radius:999px;padding:9px 16px;font-weight:700;font-size:16px}
+  .ghost:hover{background:var(--bg)}
+  .preview-jars{display:flex;justify-content:center;gap:2px}
+  .preview-jars canvas{width:62px;height:101px}
+
+  /* questions */
+  .q{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center;padding:14px 0;border-top:2px dashed var(--line)}
+  .q:first-of-type{border-top:0}
+  .q canvas{width:76px;height:124px}
+  .qnum{font-size:14px;color:var(--muted);font-weight:700}
+  .qlabel{font-family:Vazirmatn,sans-serif;font-weight:700;font-size:22px;line-height:1.4;margin:2px 0 10px}
+  .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:380px}
+  .scale button{height:52px;border-radius:14px;border:2px solid var(--ink);background:#fff;font-family:Vazirmatn,sans-serif;font-weight:700;font-size:21px;transition:transform .08s}
+  .scale button:active{transform:scale(.94)}
+  .scale button[aria-pressed=true]{background:var(--c);color:var(--on-c);box-shadow:0 3px 0 var(--ink)}
+  .ends{display:flex;justify-content:space-between;max-width:380px;font-size:13px;color:var(--muted);font-weight:700;margin-top:5px}
+
+  /* poster + save */
+  .poster{width:100%;height:auto;display:block;border-radius:12px;border:2px solid var(--line);background:#fff}
+  .big{display:block;width:100%;margin-top:16px;padding:16px 20px;border-radius:18px;border:3px solid var(--ink);background:var(--c);color:var(--on-c);font-family:Vazirmatn,sans-serif;font-weight:800;font-size:23px;box-shadow:0 5px 0 var(--ink)}
+  .big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+  .small-links{display:flex;justify-content:space-between;gap:10px;margin-top:14px;font-size:15px;color:var(--muted)}
+  .linkbtn{background:none;border:0;padding:4px 0;text-decoration:underline;color:var(--muted);font-size:15px}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:rgba(251,246,239,.96);border-top:2px solid var(--line);backdrop-filter:blur(6px);z-index:5}
+  .bar-in{max-width:1180px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:14px}
+  .bar-in span{font-weight:700;font-size:15px;color:var(--muted);flex:1}
+  .bar .big{width:auto;margin:0;padding:10px 20px;font-size:19px;box-shadow:0 4px 0 var(--ink)}
+  @media(min-width:960px){.bar{display:none}}
+
+  #modal{position:fixed;inset:0;background:rgba(20,16,12,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+  #modal[hidden]{display:none}
+  #fmt{position:fixed;inset:0;background:rgba(20,16,12,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:11}
+  #fmt[hidden]{display:none}
+  .opt{display:block;width:100%;text-align:right;background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px 16px;margin:10px 0;box-shadow:0 3px 0 var(--ink)}
+  .opt:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+  .opt b{display:block;font-weight:800;font-size:18px}
+  .opt span{display:block;color:var(--muted);font-size:13.5px;line-height:1.8;margin-top:2px}
+  .chk{display:flex;align-items:center;gap:8px;justify-content:center;font-size:14.5px;color:var(--muted);margin:12px 0 6px}
+  .chk input{width:20px;height:20px}
+  [hidden]{display:none!important}
+  #modal .sheet,#fmt .sheet{max-height:92vh;overflow:auto}
+  #modal img{max-width:100%;max-height:46vh;object-fit:contain;display:block;margin:10px auto;border-radius:12px}
+  .share{display:grid;gap:10px;margin-top:6px}
+  .shgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .shbtn{display:block;text-align:center;padding:11px 8px;border:2px solid var(--ink);border-radius:14px;background:#fff;color:var(--ink);text-decoration:none;font-weight:700;font-size:15px;cursor:pointer}
+  .mtip{font-size:13px;color:var(--muted);line-height:1.9;margin:12px 0 4px}
+  @media screen{#printView{display:none}}
+  @media print{
+    @page{size:A4;margin:12mm}
+    .wrap,.bar,#modal,#fmt{display:none!important}
+    body{background:#fff;padding:0;font-size:12.5pt;line-height:1.9}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    #printView{display:block}
+    #printView h1{font-size:26pt;font-weight:900;margin:0 0 4px;line-height:1.4}
+    #printView h2{font-size:17pt;font-weight:800;margin:0 0 8px}
+    .pv-nav{font-size:11pt;margin:0 0 8px}
+    .pv-nav a,.pv-foot a{color:#1d4ed8;margin-inline-end:14px}
+    .pv-img{display:block;max-width:100%;max-height:238mm;width:auto;margin:0 auto}
+    .pv-break{break-before:page}
+    .pv-entry{break-inside:avoid;border-top:1px dashed #bbb;padding:7px 0}
+    .pv-entry b{font-size:13.5pt}
+    .pv-entry p{margin:2px 0 0;color:#333;font-size:11.5pt}
+    .pv-badge{display:inline-block;min-width:28px;text-align:center;border-radius:50%;border:2px solid #151311;margin-inline-end:8px;font-weight:800;line-height:1.5}
+    .pv-foot{margin-top:18px;font-size:10.5pt;color:#555;text-align:center}
+    .grp{break-inside:avoid}
+  }
+  .sheet{background:#fff;border-radius:22px;padding:20px;max-width:440px;width:100%;max-height:92vh;overflow:auto;text-align:center}
+  .sheet h3{font-family:Vazirmatn,sans-serif;font-weight:800;font-size:26px;margin:0 0 6px}
+  .sheet p{margin:0 0 12px;color:var(--muted);font-size:16px}
+  .sheet img{width:100%;border-radius:10px;border:2px solid var(--line)}
+  .privacy{font-size:14px;color:var(--muted);text-align:center;margin-top:8px}
+  .paste{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .paste input{direction:ltr;text-align:left;font-size:16px;flex:1;min-width:220px;padding:11px 14px}
+  .acts{display:flex;gap:10px;flex-wrap:wrap}
+  .people{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:18px 0 4px;font-size:20px}
+  .dot{display:inline-block;width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);vertical-align:middle;margin-inline-end:8px}
+  .score-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .score{font-size:52px;font-weight:900;line-height:1.3;color:var(--c);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill}
+  .grp h3{font-size:17px;margin:16px 0 8px;font-weight:800}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:#fff;border:2px solid var(--line);border-radius:999px;padding:3px 12px;font-size:15px;font-weight:600}
+  .chip b{color:var(--muted);font-weight:700;margin-inline-start:4px}
+  #cmpResult .poster{margin-top:18px;max-width:760px;margin-inline:auto}
+  .qinfo{font-size:14px;color:var(--muted);line-height:1.9;margin:-4px 0 12px;max-width:560px}
+  .note{background:var(--bg);border:2px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:14.5px;color:var(--muted);margin:0 0 6px}
+  .credit{margin:26px 0 0;text-align:center;font-size:14px;color:var(--muted)}
+  .credit a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>شیشه‌هات رو <span>پر کن</span></h1>
+    <p>یه رنگ انتخاب کن، به هر شیشه از ۱ (کمی) تا ۵ (لبریز) امتیاز بده و بعد عکسش رو ذخیره کن. به چیزی علاقه نداری؟ ردش کن تا شیشه‌اش خالی بمونه.</p>
+  </header>
+
+  <div class="layout">
+    <main>
+      <section class="panel">
+        <div class="step">مرحله ۱</div>
+        <h2>اسمت چیه؟</h2>
+        <p class="hint">روی خط خالیِ بالای تصویر نوشته می‌شه. اسم مستعار هم اوکیه، یا خالی بذارش.</p>
+        <input type="text" id="name" maxlength="24" autocomplete="off" placeholder="اسمت">
+      </section>
+
+      <section class="panel">
+        <div class="step">مرحله ۲</div>
+        <h2>رنگت رو انتخاب کن</h2>
+        <div class="picker">
+          <div>
+            <div class="swatches" id="swatches" aria-label="رنگ‌های آماده"></div>
+            <div class="sliders">
+              <label class="sl">قرمز<input type="range" id="r" min="0" max="255"><output id="rv"></output></label>
+              <label class="sl">سبز<input type="range" id="g" min="0" max="255"><output id="gv"></output></label>
+              <label class="sl">آبی<input type="range" id="b" min="0" max="255"><output id="bv"></output></label>
+            </div>
+            <div class="hexrow">
+              <input type="text" id="hex" maxlength="7" spellcheck="false" aria-label="کد رنگ">
+              <button class="ghost" id="surprise" type="button">غافلگیرم کن</button>
+            </div>
+          </div>
+          <div class="preview-jars" aria-hidden="true">
+            <canvas id="pv1"></canvas><canvas id="pv2"></canvas><canvas id="pv3"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="step">مرحله ۳</div>
+        <h2>شیشه‌هات رو پر کن</h2>
+        <p class="hint">روی یه عدد بزن. دوباره بزنی، شیشه خالی می‌شه.</p>
+        <p class="note">همه‌ی جمله‌ها از زبان خودتن: «می‌کنم» یعنی تو انجامش می‌دی و «می‌کنه» یعنی پارتنرت برات انجامش می‌ده. اینجا هیچ اجباری نیست؛ به هر مورد از ۱ تا ۵ امتیاز بده یا خالی بذارش، و هر چیزی که دوست نداری لازم نیست بخوای.</p>
+        <div id="questions"></div>
+      </section>
+    </main>
+
+    <aside class="side">
+      <section class="panel" id="done">
+        <div class="step">مرحله ۴</div>
+        <h2>شیشه‌های تو</h2>
+        <canvas class="poster" id="poster" aria-label="پیش‌نمایش شیشه‌های پرشده‌ی تو"></canvas>
+        <button class="big" id="save" type="button">ذخیره‌ی شیشه‌هام</button>
+        <div class="small-links">
+          <span>هیچ چیزی از گوشیت بیرون نمی‌ره.</span>
+          <button class="linkbtn" id="reset" type="button">از اول شروع کن</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <section class="panel" id="cmp" style="margin-top:20px">
+    <div class="step">مرحله ۵</div>
+    <h2>مقایسه با یه نفر دیگه</h2>
+    <p class="hint">شیشه‌هات رو پر کن و «لینک من» رو برای اون نفر بفرست. اون هم لینک خودش رو بهت می‌ده؛ همین‌جا بچسبونش تا شیشه‌های شما کنار هم بیاد. اطلاعات فقط داخل خود لینکه و روی هیچ سروری ذخیره نمی‌شه.</p>
+    <div class="acts"><button class="ghost" id="copyLink" type="button">کپی لینک من</button><button class="ghost" id="sendTg" type="button">ارسال در تلگرام</button><button class="ghost" id="sendWa" type="button">ارسال در واتساپ</button></div>
+    <div class="paste">
+      <input type="text" id="partnerIn" placeholder="لینک یا کد طرف مقابل رو اینجا بچسبون" autocomplete="off" spellcheck="false">
+      <button class="ghost" id="doCmp" type="button">مقایسه کن</button>
+    </div>
+    <p class="hint" id="cmpMsg" style="margin:10px 0 0" role="status"></p>
+    <div id="cmpResult" hidden>
+      <div class="people"><span><i class="dot" id="dotMe"></i><b id="cmpMe"></b></span><span>و</span><span><i class="dot" id="dotTh"></i><b id="cmpTh"></b></span></div>
+      <div class="score-row"><span class="score" id="cmpPct"></span><span class="hint" id="cmpNote" style="margin:0"></span></div>
+      <div id="cmpGroups"></div>
+      <canvas class="poster" id="cmpPoster" aria-label="مقایسه‌ی شیشه‌های شما دو نفر"></canvas>
+      <button class="big" id="saveCmp" type="button">ذخیره‌ی تصویر مقایسه</button>
+      <div class="small-links"><span>تصویر مقایسه هم فقط روی دستگاه خودت ساخته می‌شه.</span><button class="linkbtn" id="clearCmp" type="button">حذف مقایسه</button></div>
+    </div>
+  </section>
+  <p class="credit">نسخه‌ی فارسی · پروژه‌ی اصلی از <a href="https://romance.blackwhiskercult.com/" target="_blank" rel="noopener">romance.blackwhiskercult.com</a></p>
+</div>
+
+<div class="bar"><div class="bar-in"><span id="progress">۰ از ۲۸ پر شده</span><button class="big" id="saveBar" type="button">ذخیره‌ی شیشه‌هام</button></div></div>
+
+<div id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mt">
+  <div class="sheet">
+    <h3 id="mt">تصویرت آماده‌ست 🎉</h3>
+    <img id="modalImg" alt="شیشه‌های پرشده‌ی تو">
+    <div class="share">
+      <button class="big" id="shNative" type="button" hidden>اشتراک‌گذاری تصویر</button>
+      <a class="shbtn" id="shDl" download>ذخیره روی دستگاه</a>
+      <div class="shgrid" id="shGrid">
+        <a class="shbtn" id="shX" target="_blank" rel="noopener">ایکس (X)</a>
+        <a class="shbtn" id="shTg" target="_blank" rel="noopener">تلگرام</a>
+        <a class="shbtn" id="shWa" target="_blank" rel="noopener">واتساپ</a>
+      </div>
+    </div>
+    <p class="mtip">استوری اینستاگرام: روی گوشی «اشتراک‌گذاری تصویر» رو بزن و اینستاگرام ← استوری رو انتخاب کن؛ یا عکس رو ذخیره کن و از گالری توی استوری بذار. ایکس و اینستاگرام اجازه نمی‌دن سایت‌ها مستقیم عکس بذارن؛ عکس ذخیره‌شده رو موقع پست کردن اضافه کن.</p>
+    <button class="linkbtn" id="closeModal" type="button">تموم شد</button>
+  </div>
+</div>
+
+<div id="printView" dir="rtl" aria-hidden="true"></div>
+
+<div id="fmt" hidden role="dialog" aria-modal="true" aria-labelledby="ft">
+  <div class="sheet">
+    <h3 id="ft">چطوری ذخیره کنم؟</h3>
+    <p>اول قالب رو انتخاب کن؛ بعدش می‌تونی ذخیره کنی یا برای دوستت بفرستی.</p>
+    <button class="opt" id="fImg" type="button"><b>تصویر ساده</b><span>همون پوستر شیشه‌ها؛ مناسب پروفایل و فرستادن توی چت.</span></button>
+    <button class="opt" id="fExp" type="button"><b>تصویر همراه توضیحات</b><span>پوستر شیشه‌ها و زیرش توضیح هر مورد؛ مناسب کسی که معنی بعضی موردها رو نمی‌دونه.</span></button>
+    <button class="opt" id="fStory" type="button"><b>استوری (۹:۱۶)</b><span>اندازه‌ی کامل استوری اینستاگرام و تلگرام، با فاصله‌ی ایمن از بالا و پایین.</span></button>
+    <button class="opt" id="fPost" type="button"><b>پست اینستاگرام (۴:۵)</b><span>مناسب پست اینستاگرام، ایکس و کانال تلگرام.</span></button>
+    <button class="opt" id="fPdf" type="button"><b>PDF با کیفیت بالا</b><span>پوستر، توضیحات به‌صورت متن واقعی و قابل انتخاب، لینک‌های قابل کلیک و (اگه مقایسه کرده باشی) صفحه‌ی مقایسه. توی پنجره‌ی چاپ مقصد رو «ذخیره به‌صورت PDF» (Save as PDF) بذار.</span></button>
+    <label class="chk"><input type="checkbox" id="allInfo"> توضیح همه‌ی شیشه‌ها بیاد، نه فقط پرشده‌ها</label>
+    <button class="linkbtn" id="fClose" type="button">بستن</button>
+  </div>
+</div>
+
+<script>
+/* ===== Edit the jars here. Each array is the label, one entry per line. ===== */
+const JARS = [
+  ["از پشت", "بغلش می‌کنم"],
+  ["از پشت", "بغلم می‌کنه"],
+  ["گازش", "می‌گیرم"],
+  ["گازم", "می‌گیره"],
+  ["می‌پرم", "بغلش می‌کنم"],
+  ["می‌پره", "بغلم می‌کنه"],
+  ["تو آغوش", "هم می‌مونیم"],
+  ["گرم و نرم", "بهم می‌چسبیم"],
+  ["بوسه‌های", "نرم"],
+  ["بوسه‌ی", "فرانسوی"],
+  ["بوسه‌بارونش", "می‌کنم"],
+  ["بوسه‌بارونم", "می‌کنه"],
+  ["پیشونیشو", "می‌بوسم"],
+  ["پیشونیمو", "می‌بوسه"],
+  ["گونه‌شو", "می‌بوسم"],
+  ["گونه‌مو", "می‌بوسه"],
+  ["گردنشو", "می‌بوسم"],
+  ["گردنمو", "می‌بوسه"],
+  ["دستشو", "می‌بوسم"],
+  ["دستمو", "می‌بوسه"],
+  ["به چارچوب در", "تکیه می‌دم"],
+  ["به چارچوب در", "تکیه می‌ده"],
+  ["ماساژش", "می‌دم"],
+  ["ماساژم", "می‌ده"],
+  ["دست تو", "دست هم"],
+  ["تو چشم هم", "خیره می‌شیم"],
+  ["بهش هدیه", "می‌دم"],
+  ["برام هدیه", "می‌گیره"]
+];
+const JARS_INFO = [
+  "(Hug from behind – giving) از پشت سر پارتنرت رو بغل می‌کنی؛ معمولاً وقتی سرگرم کاریه، مثلاً آشپزی، و دستات رو آروم دور کمرش حلقه می‌کنی.",
+  "(Hug from behind – receiving) پارتنرت از پشت سر تو رو بغل می‌کنه و دستاش رو دورت حلقه می‌کنه؛ حس امنیت و نزدیکی.",
+  "(Biting) گاز گرفتن ملایم و بازیگوشانه، مثل یه نیشگون با دندون؛ نه اونقدر که درد بگیره یا جا بمونه.",
+  "(Getting bit) پارتنرت به شکل بازیگوشانه و ملایم تو رو گاز می‌گیره؛ فقط تا جایی که برات خوشاینده.",
+  "(Hug attack – giving) یهو با ذوق و انرژی می‌پری و پارتنرت رو محکم بغل می‌کنی، معمولاً وقتی انتظارش رو نداره.",
+  "(Hug attack – receiving) پارتنرت ناگهان با ذوق می‌پره و محکم تو رو بغل می‌کنه.",
+  "(Cuddle) توی آغوش هم می‌مونید، مثلاً وقتی فیلم می‌بینید یا استراحت می‌کنید؛ آروم و گرم.",
+  "(Snuggle) خودتو گرم و نرم به پارتنرت می‌چسبونی، مثلاً زیر پتو؛ بیشتر برای آرامش و راحتیه.",
+  "(Soft kisses) بوسه‌های کوتاه، آروم و لطیف روی لب یا صورت.",
+  "(French kisses) بوسه‌ی عمیق‌تر و طولانی‌تر با لب و زبان؛ مثل بوسه‌های فیلم‌های عاشقانه.",
+  "(Kiss attack – giving) پارتنرت رو یهو با کلی بوسه‌ی کوتاه و پشت سر هم روی صورتش بارون می‌کنی؛ بیشتر شوخی و خنده.",
+  "(Kiss attack – receiving) پارتنرت تو رو بوسه‌باران می‌کنه؛ کلی بوسه‌ی سریع و پشت سر هم.",
+  "(Forehead kisses – giving) بوسیدن پیشانی‌ی پارتنر؛ نشونه‌ی مراقبت، احترام و محبت.",
+  "(Forehead kisses – receiving) پارتنرت پیشونی تو رو می‌بوسه؛ حس مراقبت و دلگرمی.",
+  "(Cheek kisses – giving) بوسیدن گونه‌ی پارتنر؛ بوسه‌ای ساده، شیرین و صمیمی.",
+  "(Cheek kisses – receiving) پارتنرت گونه‌ی تو رو می‌بوسه؛ بوسه‌ای ساده، شیرین و صمیمی.",
+  "(Neck kisses – giving) بوسیدن گردن پارتنر؛ صمیمی‌تر از بوسه‌ی گونه و معمولاً حس عاشقانه‌تری داره. فقط اگه اون هم دوست داره.",
+  "(Neck kisses – receiving) پارتنرت گردن تو رو می‌بوسه؛ بوسه‌ای صمیمی و عاشقانه. اگه برات خوشاینده.",
+  "(Hand kisses – giving) بوسیدن دست پارتنر؛ حرکتی مهربون و کمی کلاسیک.",
+  "(Hand kisses – receiving) پارتنرت دست تو رو می‌بوسه؛ حرکتی مهربون و کمی کلاسیک.",
+  "(Doorframe lean – giving) به چارچوب در تکیه می‌دی و با یه لبخند و ژست آروم به پارتنرت نگاه می‌کنی یا باهاش حرف می‌زنی؛ مثل صحنه‌های فیلم.",
+  "(Doorframe lean – receiving) پارتنرت به چارچوب در تکیه می‌ده و با ژست آروم و دلنشین به تو نگاه می‌کنه یا باهات حرف می‌زنه.",
+  "(Giving massages) ماساژ دادن شونه، پشت یا دست و پای پارتنر برای آرامش و ابراز محبت.",
+  "(Receiving massages) ماساژ گرفتن از پارتنر روی شونه، پشت یا دست و پا؛ آرامش و توجه.",
+  "(Hand holding) دست در دست هم قدم زدن یا نشستن؛ ساده‌ترین نشونه‌ی نزدیکی.",
+  "(Eye gazing) چند لحظه بی‌حرف توی چشم‌های هم نگاه کردن؛ برای خیلی‌ها حس صمیمیت عمیقی داره.",
+  "(Giving presents) هدیه دادن به پارتنر، کوچیک یا بزرگ، ساده یا سورپرایز؛ یعنی «بهت فکر کردم».",
+  "(Receiving presents) هدیه گرفتن از پارتنر؛ مهم‌تر از قیمتش، حسیه که بهش فکر شده."
+];
+const PRESETS = ["#e63946","#ff5d8f","#ff8c42","#ffd23f","#7bd389","#2ec4b6","#3a86ff","#5b2a86","#c77dff","#8d1d3a","#8d5524","#2b2d42"];
+const COLS = 7, INK = "#151311", PW = 1200;
+const ROWS = Math.ceil(JARS.length / COLS);
+const PH = 260 + (ROWS - 1) * 345 + 360;
+const STORE = "romanticjars-fa-v1";
+const FA = v => Number(v).toLocaleString("fa-IR");
+const FONT = "Vazirmatn, Tahoma, sans-serif";
+
+/* ===== state ===== */
+let state = { name: "", color: "#e63946", answers: JARS.map(() => 0), partner: null };
+try {
+  const s = JSON.parse(localStorage.getItem(STORE) || "null");
+  if (s && Array.isArray(s.answers)) state = { ...state, ...s, answers: JARS.map((_, i) => s.answers[i] || 0) };
+} catch (e) {}
+state.partner = state.partner && Array.isArray(state.partner.answers) && state.partner.answers.length === JARS.length && /^#[0-9a-f]{6}$/i.test(state.partner.color) ? state.partner : null;
+const persist = () => { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} };
+
+/* ===== color helpers ===== */
+const hexToRgb = h => { h = h.replace("#", ""); if (h.length === 3) h = [...h].map(x => x + x).join(""); const n = parseInt(h, 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; };
+const rgbToHex = a => "#" + a.map(v => Math.round(v).toString(16).padStart(2, "0")).join("");
+const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+const css = (a, al = 1) => `rgba(${a.map(Math.round).join(",")},${al})`;
+const lighten = (a, t) => css(mix(a, [255, 255, 255], t));
+const darken = (a, t) => css(mix(a, [0, 0, 0], t));
+const lum = ([r, g, b]) => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+function rng(seed) { return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+/* ===== jar drawing (local box: 96 wide, 170 tall, lid at top) ===== */
+function roundRect(c, x, y, w, h, r) { c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+function bodyPath(c) {
+  c.beginPath(); c.moveTo(14, 32);
+  c.quadraticCurveTo(4, 36, 4, 60); c.lineTo(4, 146); c.quadraticCurveTo(4, 170, 28, 170);
+  c.lineTo(68, 170); c.quadraticCurveTo(92, 170, 92, 146); c.lineTo(92, 60); c.quadraticCurveTo(92, 36, 82, 32);
+  c.closePath();
+}
+function drawLid(c, dx = 0, dy = 0, rot = 0) {
+  c.save(); c.translate(48 + dx, 12 + dy); c.rotate(rot); c.translate(-48, -12);
+  c.beginPath(); roundRect(c, 6, 0, 84, 24, 6); c.fillStyle = "#fff"; c.fill();
+  c.lineWidth = 4.5; c.strokeStyle = INK; c.stroke();
+  c.lineWidth = 2.4; c.beginPath();
+  for (const y of [8, 16]) { c.moveTo(10, y); c.quadraticCurveTo(48, y + 3, 86, y); }
+  c.stroke(); c.restore();
+}
+function teardrop(c, x, y, r, ox, oy) { // tail points toward (ox,oy)
+  const a = Math.atan2(oy - y, ox - x);
+  c.moveTo(x + Math.cos(a) * r * 2.5, y + Math.sin(a) * r * 2.5);
+  c.arc(x, y, r, a + Math.PI / 2, a + Math.PI * 1.5, false); c.closePath();
+}
+function heart(c, x, y, s) {
+  c.moveTo(x, y + s * 0.9);
+  c.bezierCurveTo(x - s * 1.6, y - s * 0.1, x - s * 0.8, y - s * 1.3, x, y - s * 0.45);
+  c.bezierCurveTo(x + s * 0.8, y - s * 1.3, x + s * 1.6, y - s * 0.1, x, y + s * 0.9); c.closePath();
+}
+function blob(c, pts) {
+  const n = pts.length, mid = i => [(pts[i][0] + pts[(i + 1) % n][0]) / 2, (pts[i][1] + pts[(i + 1) % n][1]) / 2];
+  let m = mid(n - 1); c.moveTo(m[0], m[1]);
+  for (let i = 0; i < n; i++) { m = mid(i); c.quadraticCurveTo(pts[i][0], pts[i][1], m[0], m[1]); }
+  c.closePath();
+}
+function makeDrips(r, n, base, minL, maxL) {
+  const span = 100 / n, out = [];
+  for (let i = 0; i < n; i++) {
+    const w = 9 + r() * 6;
+    out.push({ cx: -2 + span * (i + 0.5) + (r() - 0.5) * span * 0.35, w, L: minL + r() * (maxL - minL) });
+  }
+  out.forEach(d => d.L = Math.min(d.L, 164 - base - d.w * 0.6));
+  return out;
+}
+function collar(c, base, drips) {
+  c.moveTo(4, 18); c.lineTo(92, 18);
+  c.quadraticCurveTo(100, 22, 99, base - 4); c.quadraticCurveTo(99, base, 95, base);
+  for (const d of [...drips].sort((a, b) => b.cx - a.cx)) {
+    const r = d.w / 2;
+    c.lineTo(d.cx + r + 4, base); c.quadraticCurveTo(d.cx + r, base, d.cx + r, base + 5);
+    c.lineTo(d.cx + r * 0.8, base + d.L);
+    c.arc(d.cx, base + d.L, r * 1.12, 0, Math.PI, false);
+    c.lineTo(d.cx - r, base + 5); c.quadraticCurveTo(d.cx - r, base, d.cx - r - 4, base);
+  }
+  c.lineTo(1, base); c.quadraticCurveTo(-3, base, -3, base - 4); c.quadraticCurveTo(-4, 22, 4, 18); c.closePath();
+}
+
+/* Each jar gets one of six "overflow" looks, with its own random details. */
+const STYLE_NAMES = ["drips", "puddle", "foam", "geyser", "splash", "hearts"];
+function jarParams(idx) {
+  const r = rng(idx * 7919 + 101);
+  const row = Math.floor(idx / COLS), style = (idx % COLS + row * 3) % 6;
+  const side = r() < 0.5 ? -1 : 1;
+  const P = { style, phase: r() * 6.28, r };
+  if (style === 0) { P.base = 40 + r() * 8; P.drips = makeDrips(r, 4 + (r() < 0.5 ? 1 : 0), P.base, 8, 125); }
+  if (style === 1) {
+    P.base = 40; P.drips = makeDrips(r, 3, P.base, 30, 90); P.drips[Math.floor(r() * 3)].L = 999;
+    P.drips.forEach(d => d.L = Math.min(d.L, 164 - P.base - d.w * 0.6));
+    const pts = [], rx = 64 + r() * 10, ry = 10 + r() * 3;
+    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, k = 0.86 + r() * 0.24; pts.push([48 + Math.cos(a) * rx * k, 170 + Math.sin(a) * ry * k]); }
+    P.puddle = pts;
+  }
+  if (style === 2) {
+    P.base = 38; P.drips = makeDrips(r, 3, P.base, 6, 45);
+    P.foam = [];
+    for (let i = 0; i < 14; i++) { const x = 48 + (r() - 0.5) * 88; P.foam.push([x, 28 - (1 - Math.abs(x - 48) / 46) * 34 - r() * 6, 7 + r() * 8]); }
+    P.lid = { dx: side * (14 + r() * 8), dy: -24, rot: side * (0.2 + r() * 0.12) };
+  }
+  if (style === 3) {
+    P.base = 40; P.drips = makeDrips(r, 4, P.base, 6, 70);
+    P.drops = [[2 + r() * 8, -26, 4], [-10, -4 + r() * 6, 3.5], [-15, 20 + r() * 8, 3], [92 + r() * 6, -24, 4], [106, -2 + r() * 6, 3.5], [111, 22 + r() * 8, 3]];
+    P.origin = [48, -20];
+    P.lid = { dx: side * 36, dy: -26, rot: side * 0.6 };
+  }
+  if (style === 4) {
+    P.base = 42; P.drips = makeDrips(r, 4, P.base, 10, 95);
+    P.drops = []; P.origin = [48, 24];
+    for (let i = 0; i < 6; i++) { const s = i % 2 ? 1 : -1; P.drops.push([48 + s * (60 + r() * 12), 4 + r() * 100, 2.6 + r() * 2]); }
+    P.splats = [[-12 - r() * 6, 172, 7], [108 + r() * 6, 173, 6], [118, 166, 2.5], [-22, 166, 2.5]];
+  }
+  if (style === 5) {
+    P.base = 44; P.drips = makeDrips(r, 5, P.base, 6, 105);
+    P.hearts = [[14 + r() * 8, -14 - r() * 6, 7 + r() * 2], [48 + (r() - 0.5) * 10, -26, 9 + r() * 2], [80 + r() * 8, -12 - r() * 6, 6 + r() * 2]];
+  }
+  return P;
+}
+
+function drawJar(c, idx, level, rgb) {
+  const P = jarParams(idx), r = P.r, fill = css(rgb);
+  c.save(); c.lineJoin = "round"; c.lineCap = "round";
+
+  // puddle sits under the jar
+  if (level === 5 && P.puddle) {
+    c.beginPath(); blob(c, P.puddle); c.lineWidth = 7; c.strokeStyle = INK; c.stroke(); c.fillStyle = fill; c.fill();
+    c.beginPath(); c.ellipse(20, 172, 10, 2.5, 0, 0, 7); c.fillStyle = "rgba(255,255,255,.55)"; c.fill();
+  }
+
+  // liquid inside
+  c.save(); bodyPath(c); c.fillStyle = "#fff"; c.fill(); c.clip();
+  if (level > 0) {
+    const top = 32, bottom = 170, frac = [0, .16, .36, .58, .8, 1][level];
+    const ly = level === 5 ? 28 : bottom - (bottom - top) * frac, amp = level === 5 ? 0 : 2.2;
+    const g = c.createLinearGradient(0, ly, 0, bottom); g.addColorStop(0, lighten(rgb, .12)); g.addColorStop(1, darken(rgb, .2));
+    const surf = () => { for (let x = -4; x <= 100; x += 4) c.lineTo(x, ly + Math.sin(x * 0.11 + P.phase) * amp); };
+    c.beginPath(); c.moveTo(-4, ly); surf(); c.lineTo(100, 180); c.lineTo(-4, 180); c.closePath(); c.fillStyle = g; c.fill();
+    c.beginPath(); c.moveTo(-4, ly); surf(); c.strokeStyle = lighten(rgb, .45); c.lineWidth = 3; c.stroke();
+    c.strokeStyle = css(mix(rgb, [255, 255, 255], .6), .85); c.lineWidth = 1.6;
+    for (let i = 0; i < 2 + level; i++) {
+      const bx = 18 + r() * 60, by = ly + 10 + r() * Math.max(0, bottom - ly - 22), br = 1.5 + r() * 2.6;
+      c.beginPath(); c.arc(bx, by, br, 0, 7); c.stroke();
+    }
+  }
+  c.fillStyle = "rgba(255,255,255,.5)"; c.beginPath(); roundRect(c, 11, 50, 6, 78, 3); roundRect(c, 11, 134, 6, 10, 3); c.fill();
+  c.restore();
+
+  // glass
+  bodyPath(c); c.lineWidth = 4.5; c.strokeStyle = INK; c.stroke();
+  c.lineWidth = 2.5; c.beginPath(); c.moveTo(18, 160); c.quadraticCurveTo(26, 165, 38, 164); c.moveTo(58, 164); c.quadraticCurveTo(70, 165, 78, 160); c.stroke();
+  c.beginPath(); roundRect(c, 12, 20, 72, 14, 4); c.fillStyle = level === 5 ? fill : "#fff"; c.fill(); c.lineWidth = 4; c.stroke();
+
+  // overflow!
+  if (level === 5) {
+    const shapes = [];
+    const foamFill = lighten(rgb, .55);
+    if (P.style === 3) shapes.push({ fill, path: () => {
+      c.moveTo(34, 24); c.quadraticCurveTo(40, 4, 36, -8);
+      c.quadraticCurveTo(26, -20, 38, -24); c.quadraticCurveTo(44, -36, 52, -25);
+      c.quadraticCurveTo(60, -34, 64, -21); c.quadraticCurveTo(72, -14, 60, -8);
+      c.quadraticCurveTo(56, 4, 62, 24); c.closePath(); } });
+    shapes.push({ fill, path: () => collar(c, P.base, P.drips) });
+    if (P.foam) for (const [x, y, rad] of P.foam) shapes.push({ fill: foamFill, path: () => c.arc(x, y, rad, 0, 7) });
+    if (P.drops) for (const [x, y, rad] of P.drops) shapes.push({ fill, path: () => teardrop(c, x, y, rad, P.origin[0], P.origin[1]) });
+    if (P.splats) for (const [x, y, rad] of P.splats) shapes.push({ fill, path: () => c.ellipse(x, y, rad, rad * 0.4, 0, 0, 7) });
+    if (P.hearts) for (const [x, y, s] of P.hearts) shapes.push({ fill, path: () => heart(c, x, y, s) });
+
+    c.lineWidth = 7; c.strokeStyle = INK;
+    for (const s of shapes) { c.beginPath(); s.path(); c.stroke(); }
+    for (const s of shapes) { c.beginPath(); s.path(); c.fillStyle = s.fill; c.fill(); }
+
+    // shine
+    c.strokeStyle = "rgba(255,255,255,.6)"; c.lineWidth = 2.5;
+    c.beginPath(); c.moveTo(6, P.base - 14); c.quadraticCurveTo(8, 24, 18, 22);
+    for (const d of P.drips) if (d.L > 22) { c.moveTo(d.cx - d.w * 0.22, P.base + 6); c.lineTo(d.cx - d.w * 0.22, P.base + d.L - 6); }
+    if (P.hearts) for (const [x, y, s] of P.hearts) { c.moveTo(x - s * 0.75, y - s * 0.25); c.quadraticCurveTo(x - s * 0.7, y - s * 0.7, x - s * 0.35, y - s * 0.75); }
+    c.stroke();
+    if (P.foam) { c.fillStyle = "rgba(255,255,255,.85)"; for (const [x, y, rad] of P.foam.slice(0, 6)) { c.beginPath(); c.arc(x - rad * 0.35, y - rad * 0.35, rad * 0.22, 0, 7); c.fill(); } }
+  }
+
+  // lid
+  if (level === 5 && P.lid) drawLid(c, P.lid.dx, P.lid.dy, P.lid.rot); else drawLid(c);
+  c.restore();
+}
+
+/* ===== poster ===== */
+function drawPoster(canvas, scale, extra = 0) {
+  const rgb = hexToRgb(state.color);
+  canvas.width = PW * scale; canvas.height = (PH + extra) * scale;
+  const c = canvas.getContext("2d");
+  c.setTransform(scale, 0, 0, scale, 0, 0);
+  c.fillStyle = "#fff"; c.fillRect(0, 0, PW, PH + extra);
+
+  c.direction = "rtl";
+  c.fillStyle = INK; c.textBaseline = "alphabetic"; c.textAlign = "left";
+  c.font = `800 92px ${FONT}`;
+  const tw = c.measureText("شیشه‌های عاشقانه").width, lineW = 360, gap = 26, x0 = (PW - lineW - gap - tw) / 2, base = 140;
+  c.fillRect(x0, base - 5, lineW, 7);
+  c.fillText("شیشه‌های عاشقانه", x0 + lineW + gap, base);
+  const name = state.name.trim();
+  if (name) {
+    let size = 56; c.font = `800 ${size}px ${FONT}`;
+    while (c.measureText(name).width > lineW - 12 && size > 20) { size -= 2; c.font = `800 ${size}px ${FONT}`; }
+    c.textAlign = "center"; c.fillText(name, x0 + lineW / 2, base - 18);
+  }
+  c.font = `500 30px ${FONT}`; c.fillStyle = "#555";
+  c.textAlign = "center";
+  c.fillText("\u2067۱ = کمی\u2069   ·   \u2067۵ = لبریز\u2069", PW / 2, 200);
+
+  JARS.forEach((label, i) => {
+    const col = i % COLS, row = Math.floor(i / COLS);
+    const cx = PW / 2 - (col - (COLS - 1) / 2) * 150, top = 260 + row * 345;
+    c.save(); c.translate(cx - 48, top); drawJar(c, i, state.answers[i], rgb); c.restore();
+    let size = 28; c.font = `700 ${size}px ${FONT}`;
+    while (label.some(l => c.measureText(l).width > 140) && size > 16) { size--; c.font = `700 ${size}px ${FONT}`; }
+    c.fillStyle = INK; c.textAlign = "center";
+    label.forEach((l, k) => c.fillText(l, cx, top + 170 + 44 + k * (size + 9)));
+  });
+}
+
+function drawMini(canvas, idx, level, rgb) {
+  canvas.width = 152; canvas.height = 248;
+  const c = canvas.getContext("2d");
+  c.clearRect(0, 0, 152, 248); c.translate(28, 62);
+  drawJar(c, idx, level, rgb);
+}
+
+/* ===== UI ===== */
+const $ = id => document.getElementById(id);
+const qWrap = $("questions"), minis = [];
+JARS.forEach((label, i) => {
+  const text = label.join(" ");
+  const q = document.createElement("div"); q.className = "q";
+  q.innerHTML = `<canvas aria-hidden="true"></canvas><div><div class="qnum">${FA(i + 1)} از ${FA(JARS.length)}</div><div class="qlabel"></div><div class="qinfo"></div><div class="scale" role="group"></div><div class="ends"><span>کمی</span><span>لبریز</span></div></div>`;
+  q.querySelector(".qlabel").textContent = text;
+  q.querySelector(".qinfo").textContent = JARS_INFO[i] || "";
+  const sc = q.querySelector(".scale"); sc.setAttribute("aria-label", text);
+  for (let v = 1; v <= 5; v++) {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = FA(v);
+    b.setAttribute("aria-label", `${text}: ${FA(v)} از ۵`);
+    b.onclick = () => { state.answers[i] = state.answers[i] === v ? 0 : v; persist(); update(); };
+    sc.appendChild(b);
+  }
+  minis.push({ canvas: q.querySelector("canvas"), buttons: [...sc.children] });
+  qWrap.appendChild(q);
+});
+
+const sw = $("swatches");
+PRESETS.forEach(hex => {
+  const b = document.createElement("button"); b.type = "button"; b.className = "sw"; b.style.background = hex;
+  b.dataset.hex = hex; b.setAttribute("aria-label", "رنگ " + hex);
+  b.onclick = () => setColor(hex); sw.appendChild(b);
+});
+["r", "g", "b"].forEach((k, n) => $(k).addEventListener("input", () => {
+  const a = hexToRgb(state.color); a[n] = +$(k).value; setColor(rgbToHex(a));
+}));
+$("hex").addEventListener("input", e => {
+  let v = e.target.value.trim(); if (!v.startsWith("#")) v = "#" + v;
+  if (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) setColor(rgbToHex(hexToRgb(v)), true);
+});
+$("surprise").onclick = () => {
+  const h = Math.random() * 360, s = 0.65 + Math.random() * 0.3, l = 0.45 + Math.random() * 0.2;
+  const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+  const f = n => 255 * (l - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1)));
+  setColor(rgbToHex([f(0), f(8), f(4)]));
+};
+$("name").value = state.name;
+$("name").addEventListener("input", e => { state.name = e.target.value; persist(); update(); });
+
+function setColor(hex, fromHexBox) { state.color = hex.toLowerCase(); persist(); if (!fromHexBox) $("hex").value = state.color.toUpperCase(); update(); }
+
+let queued = false;
+function update() { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; render(); }); }
+function render() {
+  const rgb = hexToRgb(state.color), root = document.documentElement.style;
+  root.setProperty("--c", state.color); root.setProperty("--on-c", lum(rgb) > 0.6 ? INK : "#fff");
+  ["r", "g", "b"].forEach((k, n) => {
+    $(k).value = rgb[n]; $(k + "v").textContent = FA(rgb[n]);
+    const lo = [...rgb], hi = [...rgb]; lo[n] = 0; hi[n] = 255;
+    $(k).style.background = `linear-gradient(to right, ${css(lo)}, ${css(hi)})`;
+  });
+  if (document.activeElement !== $("hex")) $("hex").value = state.color.toUpperCase();
+  [...sw.children].forEach(b => b.setAttribute("aria-pressed", b.dataset.hex === state.color));
+  drawMini($("pv1"), 3, 2, rgb); drawMini($("pv2"), 9, 4, rgb); drawMini($("pv3"), 2, 5, rgb);
+  minis.forEach((m, i) => {
+    drawMini(m.canvas, i, state.answers[i], rgb);
+    m.buttons.forEach((b, k) => b.setAttribute("aria-pressed", state.answers[i] === k + 1));
+  });
+  const n = state.answers.filter(Boolean).length;
+  $("progress").textContent = `${FA(n)} از ${FA(JARS.length)} پر شده`;
+  drawPoster($("poster"), 1);
+  renderCompare();
+}
+
+const SHARE_TITLE = "شیشه‌های عاشقانه";
+const SHARE_TEXT = "شیشه‌های عاشقانه‌ی من رو ببین! تو هم شیشه‌هات رو پر کن 🫙💗";
+const siteUrl = () => /^https?:/.test(location.href) ? location.href.split("#")[0] : "";
+const enc = encodeURIComponent;
+let lastShare = null;
+async function exportPng(draw, base) {
+  const out = document.createElement("canvas");
+  draw(out);
+  const blob = await new Promise(res => out.toBlob(res, "image/png"));
+  const slug = state.name.trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-|-$/g, "");
+  const fname = (slug ? slug + "-" : "") + base + ".png";
+  const file = new File([blob], fname, { type: "image/png" });
+  if (lastShare) URL.revokeObjectURL(lastShare.url);
+  const url = URL.createObjectURL(blob);
+  lastShare = { file, url };
+  $("modalImg").src = url;
+  $("shDl").href = url; $("shDl").download = fname;
+  $("shNative").hidden = !(navigator.canShare && navigator.canShare({ files: [file] }));
+  const site = siteUrl();
+  $("shGrid").hidden = !site;
+  $("shX").href = `https://x.com/intent/post?text=${enc(SHARE_TEXT)}&url=${enc(site)}`;
+  $("shTg").href = `https://t.me/share/url?url=${enc(site)}&text=${enc(SHARE_TEXT)}`;
+  $("shWa").href = `https://wa.me/?text=${enc(SHARE_TEXT + " " + site)}`;
+  $("modal").hidden = false; $("closeModal").focus();
+}
+$("shNative").onclick = async () => {
+  if (!lastShare) return;
+  try { await navigator.share({ files: [lastShare.file], title: SHARE_TITLE, text: SHARE_TEXT + (siteUrl() ? " " + siteUrl() : "") }); }
+  catch (e) { /* کاربر بستش */ }
+};
+$("closeModal").onclick = () => { $("modal").hidden = true; };
+$("modal").addEventListener("click", e => { if (e.target.id === "modal") $("modal").hidden = true; });
+$("reset").onclick = () => {
+  if (!confirm("همه‌ی شیشه‌ها خالی بشن و از اول شروع کنی؟")) return;
+  state.answers = JARS.map(() => 0); state.name = ""; $("name").value = ""; persist(); update(); scrollTo({ top: 0, behavior: "smooth" });
+};
+
+/* ===== مقایسه‌ی دو نفره ===== */
+const toB64 = t => btoa(String.fromCharCode(...new TextEncoder().encode(t))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+const fromB64 = b => { b = b.replace(/-/g, "+").replace(/_/g, "/"); while (b.length % 4) b += "="; return new TextDecoder().decode(Uint8Array.from(atob(b), ch => ch.charCodeAt(0))); };
+const myCode = () => toB64(JSON.stringify([state.name.trim().slice(0, 24), state.color, state.answers.join("")]));
+function parseCode(input) {
+  try {
+    input = (input || "").trim();
+    const m = input.match(/[#?&]c=([A-Za-z0-9_-]+)/), code = m ? m[1] : input.replace(/^#?c=/, "");
+    const [name, color, ans] = JSON.parse(fromB64(code));
+    if (typeof name !== "string" || !/^#[0-9a-f]{6}$/i.test(color) || !new RegExp(`^[0-5]{${JARS.length}}$`).test(ans)) return null;
+    return { name: name.slice(0, 24), color: color.toLowerCase(), answers: [...ans].map(Number) };
+  } catch (e) { return null; }
+}
+function compare() {
+  const A = state.answers, B = state.partner.answers, g = { both: [], common: [], onlyMe: [], onlyThem: [] };
+  let sum = 0, cnt = 0;
+  JARS.forEach((l, i) => {
+    const a = A[i], b = B[i]; if (!a && !b) return;
+    cnt++; sum += 1 - Math.abs(a - b) / 5;
+    const it = { t: l.join(" "), a, b };
+    if (a && b) (a >= 4 && b >= 4 ? g.both : g.common).push(it); else if (a) g.onlyMe.push(it); else g.onlyThem.push(it);
+  });
+  return { g, cnt, pct: cnt ? Math.round(sum / cnt * 100) : 0 };
+}
+function drawComparePoster(canvas, scale) {
+  const p = state.partner, r = compare(), S = 0.62, CH = 300, T = 300, H = T + (ROWS - 1) * CH + 300;
+  const rgbA = hexToRgb(state.color), rgbB = hexToRgb(p.color);
+  canvas.width = PW * scale; canvas.height = H * scale;
+  const c = canvas.getContext("2d");
+  c.setTransform(scale, 0, 0, scale, 0, 0);
+  c.fillStyle = "#fff"; c.fillRect(0, 0, PW, H);
+  c.direction = "rtl"; c.textBaseline = "alphabetic"; c.textAlign = "center";
+  c.fillStyle = INK; c.font = `900 88px ${FONT}`; c.fillText("مقایسه‌ی شیشه‌ها", PW / 2, 110);
+  [[state.name.trim() || "من", rgbA, 1], [p.name.trim() || "اون", rgbB, -1]].forEach(([nm, rgb, side]) => {
+    const x = PW / 2 + side * 250; let size = 52; c.font = `800 ${size}px ${FONT}`;
+    while (c.measureText(nm).width > 270 && size > 20) { size -= 2; c.font = `800 ${size}px ${FONT}`; }
+    c.fillStyle = INK; c.fillText(nm, x, 188);
+    c.strokeStyle = css(rgb); c.lineWidth = 12; c.lineCap = "round"; c.beginPath(); c.moveTo(x - 130, 206); c.lineTo(x + 130, 206); c.stroke();
+  });
+  c.fillStyle = "#555"; c.font = `600 34px ${FONT}`; c.fillText(`هم‌خوانی ${FA(r.pct)}٪`, PW / 2, 262);
+  JARS.forEach((label, i) => {
+    const col = i % COLS, row = Math.floor(i / COLS), cx = PW / 2 - (col - (COLS - 1) / 2) * 150, top = T + row * CH;
+    [[state.answers[i], rgbA, 1], [p.answers[i], rgbB, -1]].forEach(([lv, rgb, side]) => {
+      const jx = side === 1 ? cx + 3 : cx - 3 - 96 * S;
+      c.save(); c.translate(jx, top); c.scale(S, S); drawJar(c, i, lv, rgb); c.restore();
+      c.fillStyle = INK; c.textAlign = "center"; c.font = `800 24px ${FONT}`; c.fillText(lv ? FA(lv) : "–", jx + 48 * S, top + 170 * S + 34);
+    });
+    let size = 26; c.font = `700 ${size}px ${FONT}`;
+    while (label.some(l => c.measureText(l).width > 140) && size > 15) { size--; c.font = `700 ${size}px ${FONT}`; }
+    c.fillStyle = INK; c.textAlign = "center";
+    label.forEach((l, k) => c.fillText(l, cx, top + 170 * S + 74 + k * (size + 8)));
+  });
+}
+function renderCompare() {
+  const p = state.partner, box = $("cmpResult"); box.hidden = !p; if (!p) return;
+  const r = compare(), me = state.name.trim() || "من", th = p.name.trim() || "اون";
+  $("cmpMe").textContent = me; $("cmpTh").textContent = th;
+  $("dotMe").style.background = state.color; $("dotTh").style.background = p.color;
+  $("cmpPct").textContent = FA(r.pct) + "٪";
+  $("cmpNote").textContent = r.cnt ? `هم‌خوانی شما، روی ${FA(r.cnt)} شیشه‌ای که حداقل یکی‌تون پر کرده. (هر جمله از زبان خود هر نفره.)` : "هنوز هیچ‌کدوم از شما شیشه‌ای پر نکردید.";
+  const groups = [["both", "هر دو خیلی دوستش دارید (۴ یا ۵)"], ["common", "علاقه‌ی مشترک"], ["onlyMe", "فقط " + me], ["onlyThem", "فقط " + th]];
+  const wrap = $("cmpGroups"); wrap.textContent = "";
+  groups.forEach(([k, title]) => {
+    if (!r.g[k].length) return;
+    const d = document.createElement("div"); d.className = "grp";
+    const h = document.createElement("h3"); h.textContent = title; d.appendChild(h);
+    const cs = document.createElement("div"); cs.className = "chips";
+    r.g[k].forEach(it => {
+      const ch = document.createElement("span"); ch.className = "chip"; ch.textContent = it.t + " ";
+      const b = document.createElement("b"); b.textContent = `(${FA(it.a)} | ${FA(it.b)})`; ch.appendChild(b); cs.appendChild(ch);
+    });
+    d.appendChild(cs); wrap.appendChild(d);
+  });
+  drawComparePoster($("cmpPoster"), 1);
+}
+const cmpMsg = t => { $("cmpMsg").textContent = t; };
+$("copyLink").onclick = async () => {
+  if (!state.answers.some(Boolean)) { cmpMsg("اول چند تا شیشه رو پر کن، بعد لینکت رو بفرست."); return; }
+  const link = location.href.split("#")[0] + "#c=" + myCode();
+  if (matchMedia("(pointer: coarse)").matches && navigator.share) {
+    try { await navigator.share({ title: "شیشه‌های عاشقانه", url: link }); return; }
+    catch (e) { if (e.name === "AbortError") return; }
+  }
+  try { await navigator.clipboard.writeText(link); cmpMsg("لینکت کپی شد ✅ برای اون نفر بفرستش."); }
+  catch (e) { prompt("این لینک رو کپی کن:", link); }
+};
+$("doCmp").onclick = () => {
+  const p = parseCode($("partnerIn").value);
+  if (!p) { cmpMsg("این لینک یا کد معتبر نیست. دوباره از طرف مقابل بخواه لینکش رو بفرسته."); return; }
+  state.partner = p; persist(); $("partnerIn").value = "";
+  cmpMsg(state.answers.some(Boolean) ? "" : "شیشه‌های خودت هنوز خالیه؛ بالا پرشون کن تا مقایسه کامل بشه.");
+  update(); setTimeout(() => $("cmpResult").scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+};
+$("partnerIn").addEventListener("keydown", e => { if (e.key === "Enter") $("doCmp").click(); });
+$("saveCmp").onclick = () => exportPng(cv => drawComparePoster(cv, 2), "mogayese-romantic-jars");
+$("clearCmp").onclick = () => { state.partner = null; persist(); cmpMsg(""); update(); };
+function loadHash() {
+  if (!/^#c=/.test(location.hash)) return;
+  const p = parseCode(location.hash);
+  history.replaceState(null, "", location.pathname + location.search);
+  if (!p) { cmpMsg("لینکی که باز کردی معتبر نبود."); return; }
+  state.partner = p; persist();
+  cmpMsg(`لینک ${p.name.trim() || "طرف مقابل"} باز شد. شیشه‌های خودت رو پر کن تا مقایسه کامل بشه.`);
+  update(); setTimeout(() => $("cmp").scrollIntoView({ behavior: "smooth" }), 400);
+}
+addEventListener("hashchange", loadHash);
+
+/* ===== خروجی: تصویر ساده، تصویر با توضیحات، PDF ===== */
+function explainItems(all) { return JARS.map((l, i) => ({ t: l.join(" "), lv: state.answers[i], info: JARS_INFO[i] })).filter(x => all || x.lv); }
+function wrapText(ctx, text, maxW) {
+  const words = text.split(" "), lines = []; let cur = "";
+  for (const w of words) { const t = cur ? cur + " " + w : w; if (cur && ctx.measureText(t).width > maxW) { lines.push(cur); cur = w; } else cur = t; }
+  if (cur) lines.push(cur); return lines;
+}
+function drawExplained(canvas, all) {
+  const items = explainItems(all), rgb = hexToRgb(state.color);
+  const RX = PW - 80, TX = RX - 76, TW = TX - 80, FS = 26, LH = 44, HEAD = 190, FOOT = 120;
+  const m = document.createElement("canvas").getContext("2d"); m.direction = "rtl"; m.font = `500 ${FS}px ${FONT}`;
+  const blocks = items.map(it => { const lines = wrapText(m, it.info, TW); return { ...it, lines, h: 56 + lines.length * LH + 30 }; });
+  let EH = HEAD + FOOT + (blocks.length ? 0 : 80); blocks.forEach(b => EH += b.h);
+  const scale = Math.min(2, Math.sqrt(14e6 / (PW * (PH + EH))));   // سقف اندازه‌ی canvas در گوشی
+  drawPoster(canvas, scale, EH);
+  const c = canvas.getContext("2d"); c.direction = "rtl"; c.textBaseline = "alphabetic";
+  c.fillStyle = INK; c.textAlign = "center"; c.font = `900 56px ${FONT}`; c.fillText("توضیح هر مورد", PW / 2, PH + 80);
+  c.fillStyle = "#555"; c.font = `500 26px ${FONT}`; c.fillText("هر عدد یعنی شیشه چقدر پره: ۱ = کمی … ۵ = لبریز", PW / 2, PH + 130);
+  let y = PH + HEAD;
+  if (!blocks.length) { c.fillStyle = "#777"; c.fillText("هنوز هیچ شیشه‌ای پر نشده.", PW / 2, y + 40); y += 80; }
+  blocks.forEach(b => {
+    c.strokeStyle = "#e9e0d5"; c.lineWidth = 3; c.setLineDash([10, 8]); c.beginPath(); c.moveTo(80, y); c.lineTo(PW - 80, y); c.stroke(); c.setLineDash([]);
+    const cy = y + 46;
+    c.beginPath(); c.arc(RX - 26, cy, 26, 0, 7); c.fillStyle = b.lv ? css(rgb) : "#e4e4e4"; c.fill(); c.lineWidth = 3; c.strokeStyle = INK; c.stroke();
+    c.fillStyle = b.lv && lum(rgb) <= 0.6 ? "#fff" : INK; c.textAlign = "center"; c.font = `800 28px ${FONT}`; c.fillText(b.lv ? FA(b.lv) : "–", RX - 26, cy + 10);
+    c.fillStyle = INK; c.textAlign = "right"; c.font = `800 32px ${FONT}`; c.fillText(b.t, TX, y + 56);
+    c.fillStyle = "#444"; c.font = `500 ${FS}px ${FONT}`;
+    b.lines.forEach((l, k) => c.fillText(l, TX, y + 56 + LH * (k + 1)));
+    y += b.h;
+  });
+  c.fillStyle = "#888"; c.textAlign = "center"; c.font = `500 22px ${FONT}`;
+  c.fillText("نسخه‌ی فارسی · پروژه‌ی اصلی: romance.blackwhiskercult.com", PW / 2, y + 60);
+}
+async function exportPdf() {
+  const all = $("allInfo").checked, pv = $("printView"), name = state.name.trim(), rgb = hexToRgb(state.color);
+  pv.textContent = "";
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; };
+  const img = draw => { const cv = document.createElement("canvas"); draw(cv); const im = new Image(); im.className = "pv-img"; im.alt = ""; im.src = cv.toDataURL("image/png"); return im; };
+  const link = (href, txt) => { const a = mk("a", "", txt); a.href = href; return a; };
+  pv.appendChild(mk("h1", "", "شیشه‌های عاشقانه" + (name ? " · " + name : "")));
+  const nav = mk("p", "pv-nav"); nav.appendChild(link("#pv-info", "توضیح هر مورد"));
+  if (state.partner) nav.appendChild(link("#pv-cmp", "مقایسه"));
+  nav.appendChild(link("https://romance.blackwhiskercult.com/", "پروژه‌ی اصلی")); pv.appendChild(nav);
+  pv.appendChild(img(cv => drawPoster(cv, 2)));
+  const info = mk("section", "pv-break"); info.id = "pv-info"; info.appendChild(mk("h2", "", "توضیح هر مورد"));
+  const items = explainItems(all);
+  if (!items.length) info.appendChild(mk("p", "", "هنوز هیچ شیشه‌ای پر نشده."));
+  items.forEach(it => {
+    const e = mk("div", "pv-entry"), b = mk("span", "pv-badge", it.lv ? FA(it.lv) : "–");
+    b.style.background = it.lv ? state.color : "#e4e4e4"; b.style.color = it.lv && lum(rgb) <= 0.6 ? "#fff" : INK;
+    const t = mk("b", "", it.t); const d = mk("p", "", it.info);
+    const h = mk("div"); h.appendChild(b); h.appendChild(t); e.appendChild(h); e.appendChild(d); info.appendChild(e);
+  });
+  pv.appendChild(info);
+  if (state.partner) {
+    const cs = mk("section", "pv-break"); cs.id = "pv-cmp";
+    cs.appendChild(mk("h2", "", `مقایسه‌ی ${name || "من"} و ${state.partner.name.trim() || "اون"} · هم‌خوانی ${FA(compare().pct)}٪`));
+    cs.appendChild(img(cv => drawComparePoster(cv, 1.5)));
+    cs.appendChild($("cmpGroups").cloneNode(true)); pv.appendChild(cs);
+  }
+  const foot = mk("p", "pv-foot", "نسخه‌ی فارسی · پروژه‌ی اصلی: "); foot.appendChild(link("https://romance.blackwhiskercult.com/", "romance.blackwhiskercult.com"));
+  if (/^https?:/.test(location.href)) { foot.appendChild(document.createTextNode(" · ")); foot.appendChild(link(location.href.split("#")[0], "این نسخه")); }
+  pv.appendChild(foot);
+  await Promise.all([...pv.querySelectorAll("img")].map(i => i.decode().catch(() => {})));
+  const oldTitle = document.title; document.title = (name ? name + "-" : "") + "romantic-jars-fa";
+  const done = () => { document.title = oldTitle; pv.textContent = ""; removeEventListener("afterprint", done); };
+  addEventListener("afterprint", done);
+  window.print();
+}
+const closeFmt = () => { $("fmt").hidden = true; };
+const openFmt = () => { $("fmt").hidden = false; $("fImg").focus(); };
+$("save").onclick = openFmt; $("saveBar").onclick = openFmt;
+$("fClose").onclick = closeFmt;
+$("fmt").addEventListener("click", e => { if (e.target.id === "fmt") closeFmt(); });
+$("fImg").onclick = () => { closeFmt(); exportPng(cv => drawPoster(cv, 2), "romantic-jars-fa"); };
+$("fExp").onclick = () => { closeFmt(); exportPng(cv => drawExplained(cv, $("allInfo").checked), "romantic-jars-fa-tozihat"); };
+$("fPdf").onclick = () => { closeFmt(); exportPdf(); };
+function drawFramed(canvas, W, H, top, bottom) {
+  const t = document.createElement("canvas"); drawPoster(t, 2);
+  canvas.width = W; canvas.height = H;
+  const c = canvas.getContext("2d"), rgb = hexToRgb(state.color);
+  const tint = rgb.map(v => Math.round(v + (255 - v) * 0.86));
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, css(tint)); g.addColorStop(1, "#fbf6ee");
+  c.fillStyle = g; c.fillRect(0, 0, W, H);
+  const availH = H - top - bottom, sc = Math.min((W - 80) / PW, availH / PH), w = PW * sc, h = PH * sc, x = (W - w) / 2, y = top + (availH - h) / 2;
+  c.save(); c.shadowColor = "rgba(0,0,0,.22)"; c.shadowBlur = 40; c.shadowOffsetY = 12;
+  c.fillStyle = "#fff"; c.fillRect(x, y, w, h); c.restore();
+  c.imageSmoothingQuality = "high"; c.drawImage(t, x, y, w, h);
+  const site = siteUrl();
+  if (site) {
+    c.direction = "ltr"; c.textAlign = "center"; c.fillStyle = "#555"; c.font = `600 30px ${FONT}`;
+    c.fillText(site.replace(/^https?:\/\//, "").replace(/\/$/, ""), W / 2, Math.min(y + h + 56, H - 40));
+  }
+}
+function sendLink(kind) {
+  if (!state.answers.some(Boolean)) { cmpMsg("اول چند تا شیشه رو پر کن، بعد لینکت رو بفرست."); return; }
+  const l = location.href.split("#")[0] + "#c=" + myCode(), t = "شیشه‌های عاشقانه‌ی من رو ببین و مال خودت رو بفرست تا مقایسه کنیم 💗";
+  const u = kind === "tg" ? `https://t.me/share/url?url=${enc(l)}&text=${enc(t)}` : `https://wa.me/?text=${enc(t + " " + l)}`;
+  window.open(u, "_blank", "noopener");
+}
+$("sendTg").onclick = () => sendLink("tg"); $("sendWa").onclick = () => sendLink("wa");
+$("fStory").onclick = () => { closeFmt(); exportPng(cv => drawFramed(cv, 1080, 1920, 230, 230), "romantic-jars-story"); };
+$("fPost").onclick = () => { closeFmt(); exportPng(cv => drawFramed(cv, 1080, 1350, 60, 100), "romantic-jars-post"); };
+
+addEventListener("keydown", e => { if (e.key === "Escape") closeFmt(); });
+
+render();
+loadHash();
+Promise.all(["900 88px Vazirmatn", "800 92px Vazirmatn", "700 28px Vazirmatn", "600 34px Vazirmatn"].map(f => document.fonts.load(f, "شیشه‌های عاشقانه ۰۱۲۳۴۵ abc")))
+  .catch(() => {}).then(() => document.fonts.ready).then(render);
+</script>
+</body>
+</html>
